@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FreshGrade AI — AI-Powered Freshness Grader</title>
+  <meta name="description" content="FreshGrade AI analyzes fruits and vegetables from a photo and scores each one for freshness using AI — no cloud, no API keys, fully local." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-logo">
+      <span class="logo-diamond">✦</span>
+      <span class="logo-text">FreshGrade<span class="logo-ai">AI</span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#analyze">Analyze</a></li>
+      <li><a href="#how">How it Works</a></li>
+    </ul>
+    <a href="#analyze" class="nav-cta">Try Now →</a>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-text" aria-hidden="true">
+      <span>FRESH</span>
+      <span>GRADE</span>
+      <span>FRESH</span>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>AI-Powered · Fully Local
+      </div>
+      <h1 class="hero-title">
+        Know if your<br />
+        <span class="hero-highlight">fruits and veggies are fresh</span><br />
+        in seconds.
+      </h1>
+      <p class="hero-sub">
+        Upload a photo of any fruit or vegetable — our AI detects every item,
+        analyzes color, texture and surface, then scores each one out of 10.
+      </p>
+      <div class="hero-actions">
+        <a href="#analyze" class="btn-primary" id="hero-cta">Check My Fruits & Vegetables</a>
+        <div class="hero-stat-row">
+          <div class="hero-stat"><span class="stat-val">10</span><span class="stat-label">/ 10 Score</span></div>
+          <div class="divider-v"></div>
+          <div class="hero-stat"><span class="stat-val">3</span><span class="stat-label">Labels</span></div>
+          <div class="divider-v"></div>
+          <div class="hero-stat"><span class="stat-val">2</span><span class="stat-label">AI Engines</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="fruit-orb orb-1">🍎</div>
+      <div class="fruit-orb orb-2">🥦</div>
+      <div class="fruit-orb orb-3">🍋</div>
+      <div class="fruit-orb orb-4">🍇</div>
+      <div class="fruit-orb orb-5">🥕</div>
+      <div class="hero-ring ring-1"></div>
+      <div class="hero-ring ring-2"></div>
+      <div class="hero-ring ring-3"></div>
+    </div>
+  </section>
+
+  <!-- ── LABELS STRIP ── -->
+  <section class="labels-strip">
+    <div class="label-card lc-fresh">
+      <span class="lc-dot"></span>
+      <div>
+        <div class="lc-name">Fresh</div>
+        <div class="lc-range">Score 7.5 – 10</div>
+      </div>
+      <div class="lc-desc">Good color, firm, no visible damage</div>
+    </div>
+    <div class="label-card lc-soon">
+      <span class="lc-dot"></span>
+      <div>
+        <div class="lc-name">Use Soon</div>
+        <div class="lc-range">Score 4.5 – 7.4</div>
+      </div>
+      <div class="lc-desc">Minor blemishes, still edible</div>
+    </div>
+    <div class="label-card lc-discard">
+      <span class="lc-dot"></span>
+      <div>
+        <div class="lc-name">Discard</div>
+        <div class="lc-range">Score 0 – 4.4</div>
+      </div>
+      <div class="lc-desc">Visible rot, mold or heavy damage</div>
+    </div>
+  </section>
+
+  <!-- ── ANALYZE SECTION ── -->
+  <section class="analyze-section" id="analyze">
+    <div class="section-label">✦ AI Analysis</div>
+    <h2 class="section-title">Upload &amp; Grade</h2>
+    <p class="section-sub">Drag &amp; drop, click to browse, or capture directly from your camera.</p>
+
+    <div class="upload-card" id="uploadCard">
+
+      <!-- Drop Zone -->
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept="image/*" capture="environment" hidden />
+        <div class="drop-icon">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="64" height="64" rx="16" fill="currentColor" fill-opacity="0.08"/>
+            <path d="M32 20v16M32 20l-6 6M32 20l6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20 44h24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <p class="drop-title">Drop your image here</p>
+        <p class="drop-sub">PNG, JPG, WEBP up to 20 MB</p>
+        <div class="drop-buttons">
+          <button class="btn-outline" id="browseBtn" onclick="document.getElementById('fileInput').click()">
+            Browse Files
+          </button>
+          <button class="btn-outline" id="cameraBtn" onclick="activateCamera()">
+            📷 Take Photo
+          </button>
+        </div>
+
+        <!-- Preview inside drop zone -->
+        <div class="preview-wrap" id="previewWrap" style="display:none;">
+          <img id="previewImg" src="" alt="Preview" />
+          <button class="clear-btn" id="clearBtn" onclick="clearImage()">✕ Remove</button>
+        </div>
+      </div>
+
+      <!-- Camera modal -->
+      <div class="camera-modal" id="cameraModal" style="display:none;">
+        <div class="camera-inner">
+          <video id="cameraVideo" autoplay playsinline></video>
+          <div class="camera-controls">
+            <button class="btn-primary" id="snapBtn" onclick="snapPhoto()">📸 Capture</button>
+            <button class="btn-outline" id="closeCamBtn" onclick="closeCamera()">Cancel</button>
+          </div>
+          <canvas id="snapCanvas" style="display:none;"></canvas>
+        </div>
+      </div>
+
+      <!-- Check Button -->
+      <button class="btn-check" id="checkBtn" onclick="analyzeImage()" disabled>
+        <span class="btn-check-text">Check Freshness</span>
+        <span class="btn-check-icon">→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ── LOADING ── -->
+  <div class="loading-overlay" id="loadingOverlay" style="display:none;">
+    <div class="loading-box">
+      <div class="loader">
+        <p class="loader-text">analyzing</p>
+        <span class="load"></span>
+      </div>
+      <p class="loading-title">Analyzing your fruits & vegetables…</p>
+      <p class="loading-steps" id="loadingStep">Detecting items with YOLOv8</p>
+    </div>
+  </div>
+
+  <!-- ── RESULTS ── -->
+  <section class="results-section" id="resultsSection" style="display:none;">
+    <div class="results-header">
+      <div>
+        <div class="section-label">✦ Results</div>
+        <h2 class="section-title" id="resultsTitle" style="display: flex; align-items: center; flex-wrap: wrap; gap: 12px; line-height: 1.2;">
+          Found <span id="itemCount">0</span> item type<span id="itemPlural">s</span>
+          <span id="engineBadge" class="engine-badge"></span>
+        </h2>
+      </div>
+      <button class="btn-outline" id="newScanBtn" onclick="resetAll()">↺ New Scan</button>
+    </div>
+
+    <!-- Fallback warning banner -->
+    <div id="fallbackBanner" class="fallback-banner" style="display:none;">
+      <div class="fallback-banner-icon">⚠️</div>
+      <div class="fallback-banner-content">
+        <h4>Running in Local Fallback Mode (YOLOv8 + CLIP)</h4>
+        <p>
+          Tomato/rot grading and custom fruit/vegetable recognition are limited in this mode. 
+          To enable highly accurate full-scene grading powered by Gemini, please add a valid 
+          <code>GEMINI_API_KEY</code> to a <code>.env</code> file in your project backend.
+        </p>
+        <p class="fallback-error-desc" style="margin-top: 8px; color: var(--clr-discard); font-size: 0.82rem; display: none;"></p>
+      </div>
+    </div>
+
+    <!-- Summary bar -->
+    <div class="summary-bar" id="summaryBar"></div>
+
+    <!-- Result Cards -->
+    <div class="cards-grid" id="cardsGrid"></div>
+  </section>
+
+  <!-- ── HOW IT WORKS ── -->
+  <section class="how-section" id="how">
+    <div class="section-label">✦ Pipeline</div>
+    <h2 class="section-title">How it Works</h2>
+
+    <div class="pipeline">
+      <div class="pipe-step">
+        <div class="pipe-num">01</div>
+        <div class="pipe-icon">📷</div>
+        <h3>Image Upload</h3>
+        <p>Your image is sent to the local FastAPI backend. Nothing leaves your machine except the Gemini API call (if enabled).</p>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <div class="pipe-num">02</div>
+        <div class="pipe-icon">✦</div>
+        <h3>Gemini Vision</h3>
+        <p>The full image is analyzed by Google Gemini — identifying every produce type and scoring freshness holistically in one pass.</p>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <div class="pipe-num">03</div>
+        <div class="pipe-icon">🎯</div>
+        <h3>Local Fallback</h3>
+        <p>If Gemini is unavailable, YOLOv8 detects items and CLIP scores each crop against fresh vs. rotten prompts — fully offline.</p>
+      </div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step">
+        <div class="pipe-num">04</div>
+        <div class="pipe-icon">📊</div>
+        <h3>Grade Report</h3>
+        <p>Scores are mapped to a /10 scale with Fresh, Use Soon, or Discard labels and a detailed note for each item.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="footer-logo">
+      <span class="logo-diamond">✦</span>
+      <span class="logo-text">FreshGrade<span class="logo-ai">AI</span></span>
+    </div>
+    <p class="footer-tagline">Powered by Gemini Vision · YOLOv8 + CLIP fallback</p>
+    <p class="footer-note">Your images are processed locally. Gemini API calls are optional and use only your own key.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

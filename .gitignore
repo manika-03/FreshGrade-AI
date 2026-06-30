@@ -1,0 +1,49 @@
+# ── Python ────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.whl
+
+# ── Virtual Environments ──────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ── Environment / Secrets ─────────────────────────────────
+# NEVER commit your real .env — it contains API keys
+.env
+
+# ── ML Model Weights ──────────────────────────────────────
+# Large binary files — download separately (see README)
+*.pt
+*.pth
+*.onnx
+*.safetensors
+
+# ── Uploads / Temp Files ──────────────────────────────────
+uploads/
+*.log
+
+# ── IDE / Editor ─────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── Pytest / Coverage ─────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ── Jupyter ───────────────────────────────────────────────
+.ipynb_checkpoints/

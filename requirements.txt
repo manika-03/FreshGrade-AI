@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+python-multipart
+torch
+torchvision
+torchaudio
+ultralytics
+openai-clip
+opencv-python
+pillow
+ftfy
+regex
+pydantic
+# New Google GenAI SDK (provides `google.genai`). Do NOT use `google-generativeai`.
+google-genai
+python-dotenv
