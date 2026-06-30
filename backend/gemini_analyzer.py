@@ -6,7 +6,7 @@ Uses Google Gemini Vision (gemini-2.0-flash) to analyze the FULL image and:
   2. Assess freshness for each one by looking at the entire scene
 
 This replaces the broken YOLOv8n + CLIP pipeline which:
-  - Misidentifies produce (tomato → apple because both are round and red in COCO)
+  - Misidentifies fruits and vegetables (tomato → apple because both are round and red in COCO)
   - Only looks at small cropped regions, missing context like rot, mold, blemishes
   - CLIP zero-shot scoring is unreliable for real-world rot detection
 

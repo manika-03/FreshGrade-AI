@@ -4,8 +4,8 @@
 # by Ultralytics on first run. If you want to use a custom-trained model,
 # save it here as yolov8n.pt (or update the path in detector.py).
 #
-# Recommended model for produce detection:
-#   yolov8n.pt — nano weights (~6MB), fast, good accuracy on COCO produce classes
+# Recommended model for fruits and vegetables detection:
+#   yolov8n.pt — nano weights (~6MB), fast, good accuracy on COCO fruits and vegetables classes
 #
-# For improved produce accuracy, fine-tune on:
+# For improved fruits and vegetables accuracy, fine-tune on:
 #   Fruits-360 dataset (Kaggle, free)

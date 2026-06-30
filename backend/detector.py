@@ -33,7 +33,7 @@ except ImportError:
 
 # ─────────────────────────────────────────────────────────────────────────────
 # COCO class names that are actual fruits / vegetables (YOLOv8 COCO has 80
-# classes; only these are food produce).  Key = exact COCO label (lower),
+# classes; only these are food fruits and vegetables).  Key = exact COCO label (lower),
 # Value = clean display name.
 # ─────────────────────────────────────────────────────────────────────────────
 PRODUCE_MAP = {
@@ -137,11 +137,11 @@ def detect_items(image_path: str) -> list[dict]:
     Run YOLOv8 on the given image.
 
     Strategy:
-      1. Run inference with a low confidence threshold (0.25) to catch all produce.
-      2. Keep produce classes from PRODUCE_MAP and auxiliary classes from CANDIDATE_COCO_CLASSES.
-      3. Deduplicate standard produce classes (keep highest confidence). Keep all auxiliary detections
+      1. Run inference with a low confidence threshold (0.25) to catch all fruits and vegetables.
+      2. Keep fruits and vegetables classes from PRODUCE_MAP and auxiliary classes from CANDIDATE_COCO_CLASSES.
+      3. Deduplicate standard fruits and vegetables classes (keep highest confidence). Keep all auxiliary detections
          as unique candidate items (e.g. Candidate_0_sports_ball) so CLIP can classify them.
-      4. If NO produce is found, fall back to any detected food-like objects.
+      4. If NO fruits and vegetables are found, fall back to any detected food-like objects.
 
     Returns a list of detection dicts.
     """
@@ -164,7 +164,7 @@ def detect_items(image_path: str) -> list[dict]:
             confidence = float(box.conf[0])
             raw_label  = names.get(cls_id, "unknown").lower().strip()
 
-            # Check if class is in produce map or auxiliary candidate list
+            # Check if class is in fruits/vegetables map or auxiliary candidate list
             is_produce = raw_label in PRODUCE_MAP
             is_candidate = raw_label in CANDIDATE_COCO_CLASSES
 
@@ -217,7 +217,7 @@ def detect_items(image_path: str) -> list[dict]:
             "confidence": det["confidence"],
         })
 
-    # ── Fallback: if nothing matched our produce/candidate list, use any high-confidence detection ──
+    # ── Fallback: if nothing matched our fruits and vegetables/candidate list, use any high-confidence detection ──
     if not detections:
         for result in results:
             boxes = result.boxes

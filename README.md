@@ -50,7 +50,7 @@ FreshGrade AI runs **two analysis engines** and picks the best one automatically
 │                                                     │
 │   YES ──▶  🌟 Gemini Vision (Primary)              │
 │            Full-scene analysis in one pass          │
-│            Detects all produce + scores freshness   │
+│            Detects all fruits and vegetables + scores freshness   │
 │            holistically — best for rot & mold       │
 │                                                     │
 │   NO  ──▶  🏠 YOLOv8 + CLIP (Local Fallback)       │
@@ -65,7 +65,7 @@ FreshGrade AI runs **two analysis engines** and picks the best one automatically
 
 | Priority | Engine | How It Works | Requires |
 |:---:|---|---|---|
-| **1 — Primary** | 🌟 **Google Gemini Vision** | Analyzes the full image in one pass. Identifies all produce and assesses freshness holistically. Most accurate for rot, mold, and unusual items. | `GEMINI_API_KEY` in `.env` |
+| **1 — Primary** | 🌟 **Google Gemini Vision** | Analyzes the full image in one pass. Identifies all fruits and vegetables and assesses freshness holistically. Most accurate for rot, mold, and unusual items. | `GEMINI_API_KEY` in `.env` |
 | **2 — Fallback** | 🏠 **YOLOv8 + CLIP (local)** | Detects items using YOLOv8 bounding boxes, crops each one, then scores against fresh vs. rotten text prompts via CLIP. Runs fully offline. | Nothing — just Python |
 
 > If Gemini quota is exhausted or the key is missing, the system **silently falls back** to local processing. No manual intervention needed.
@@ -185,7 +185,7 @@ py -3 -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
 
 ### `POST /upload`
 
-Accepts a multipart image. Returns one result object per unique produce type detected.
+Accepts a multipart image. Returns one result object per unique fruit or vegetable type detected.
 
 **Request**
 ```
@@ -255,15 +255,15 @@ Body: file = <image>    (PNG, JPG, WEBP, GIF, BMP — up to 20 MB)
 |---|---|
 | 📉 Gemini quota | Free-tier keys have rate limits. On 429 errors, the system falls back to local automatically. |
 | 🎯 CLIP accuracy | Zero-shot CLIP scoring is less precise than a fine-tuned model. Visually similar items (e.g., red apple vs. tomato) may be misclassified by YOLOv8 in fallback mode. |
-| 📦 Overlapping items | Heavily overlapping produce may count as a single detection in fallback mode. |
+| 📦 Overlapping items | Heavily overlapping fruits and vegetables may count as a single detection in fallback mode. |
 | 💡 Lighting | Works best with clear, well-lit images. Dark or blurry photos reduce accuracy. |
-| 🌍 Rare produce | Uncommon fruits and vegetables may not be detected by YOLOv8 (trained on COCO classes). |
+| 🌍 Rare items | Uncommon fruits and vegetables may not be detected by YOLOv8 (trained on COCO classes). |
 
 ---
 
 ## 🤖 Model Notes
 
-**YOLOv8 nano (`yolov8n.pt`)** — Lightweight COCO-pretrained detection model (~6 MB). Downloaded automatically on first run. For better produce coverage, fine-tune on [Fruits-360](https://www.kaggle.com/datasets/moltean/fruits) (Kaggle, free).
+**YOLOv8 nano (`yolov8n.pt`)** — Lightweight COCO-pretrained detection model (~6 MB). Downloaded automatically on first run. For better fruits and vegetables coverage, fine-tune on [Fruits-360](https://www.kaggle.com/datasets/moltean/fruits) (Kaggle, free).
 
 **CLIP (`ViT-B/32`)** — OpenAI's zero-shot vision-language model. Downloaded automatically on first run (~350 MB). No fine-tuning required.
 

@@ -2,7 +2,7 @@
 quality.py
 ──────────
 Uses OpenAI CLIP (runs locally, no API key needed) to score
-the freshness of each detected produce item.
+the freshness of each detected fruit or vegetable item.
 
 Improved approach — multi-prompt ensemble:
   Instead of a binary softmax between 1 fresh prompt and 1 rotten prompt
@@ -57,7 +57,7 @@ def _get_clip():
 # Freshness level weights: index 0 = best → index 4 = worst
 FRESHNESS_WEIGHTS = [1.0, 0.80, 0.50, 0.20, 0.0]
 
-# Detailed produce-specific prompts for high-accuracy zero-shot evaluation
+# Detailed item-specific prompts for high-accuracy zero-shot evaluation
 PRODUCE_PROMPTS = {
     "apple": [
         "a perfectly fresh, shiny, firm, crisp apple with vibrant color and no blemishes or bruises",
@@ -167,7 +167,7 @@ PRODUCE_PROMPTS = {
 }
 
 def _build_prompts(item_name: str) -> list[str]:
-    """Build a 5-level freshness prompt set for the given produce item."""
+    """Build a 5-level freshness prompt set for the given fruit or vegetable item."""
     n = item_name.lower().strip()
     if n in PRODUCE_PROMPTS:
         return PRODUCE_PROMPTS[n]
@@ -186,7 +186,7 @@ def _build_prompts(item_name: str) -> list[str]:
     ]
 
 
-# Common produce candidates for local CLIP classification correction
+# Common fruits and vegetables candidates for local CLIP classification correction
 PRODUCE_CLASSES = [
     "Apple", "Banana", "Orange", "Broccoli", "Carrot", "Grape", "Pear", 
     "Strawberry", "Lemon", "Lime", "Mango", "Tomato", "Potato", "Pepper", 
@@ -283,7 +283,7 @@ def score_items(detections: list[dict]) -> list[dict]:
         image_features = feat.unsqueeze(0)  # shape [1, 512] to match original logic
 
         with torch.no_grad():
-            # ── 1. Correct produce name using CLIP classification ──
+            # ── 1. Correct fruit or vegetable name using CLIP classification ──
             if classify_text_features is not None:
                 logit_scale = model.logit_scale.exp().clamp(max=100)
                 classify_logits = (logit_scale * image_features @ classify_text_features.T).squeeze(0)

@@ -58,7 +58,7 @@ def _pick_note(label: str, score: float) -> str:
 def compute_grades(raw_scores: list[dict]) -> list[dict]:
     """
     Maps CLIP output → /10 score, label, and note.
-    Deduplicates results by produce item, keeping the highest-scoring representative.
+    Deduplicates results by fruit or vegetable item, keeping the highest-scoring representative.
 
     Args:
         raw_scores: list of {name, crop_path, fresh_score, rotten_score, confidence}
@@ -93,7 +93,7 @@ def compute_grades(raw_scores: list[dict]) -> list[dict]:
         note = _pick_note(label, score)
         item_name = entry["name"]
 
-        # Keep only the highest-scoring instance of each unique produce item
+        # Keep only the highest-scoring instance of each unique fruit or vegetable item
         existing = best_results.get(item_name)
         if existing is None or score > existing["score"]:
             best_results[item_name] = {
